@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nested controller </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        padding: 20px;
+    }
+
+    h2, h3 {
+        color: #333;
+    }
+
+    .container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    ul {
+        
+        padding: 0;
+    }
+
+    li {
+        margin: 5px 0;
+    }
+
+    .topic {
+        font-weight: bold;
+    }
+</style>
+<body>
+
+    <div ng-controller="parentcontroller">
+        <div ng-controller="childcontroller">
+            <div ng-controller="subtopicscontroller">
+                <h1>{{title}}</h1>
+                <h2>Topics:</h2>
+                <div>
+                    <ul>
+                        <li ng-repeat="x in topics">{{x}}</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Subtopics:</h3>
+                    <ul>
+                        <li ng-repeat="y in subtopics">{{y}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var app = angular.module("myApp", []);
+        
+        app.controller("parentcontroller", function ($scope) {
+            $scope.title = "AngularJS Topics and Sub-Topics";
+        });
+        
+        app.controller("childcontroller", function ($scope) {
+            $scope.topics = ["Expressions", "Modules", "Controllers"];
+        });
+        
+        app.controller("subtopicscontroller", function ($scope) {
+            $scope.subtopics = [
+                "What are expressions?", 
+                "How are they used in data binding?", 
+                "What are modules in AngularJS?", 
+                "What is their importance?", 
+                "What are controllers?", 
+                "What are nested controllers?"
+            ];
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> </head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <body
+    ng-app="mainApp"
+    ng-controller="mainController"
+    ng-init="data = { university: 'Indus University', course: 'MCA' }"
+  >
+    <div class="main">
+      <form name="userForm">
+        <input
+          type="text"
+          ng-model="name"
+          name="name"
+          placeholder="enter the
+name..."
+        />
+        <span ng-show="userForm.name.$touched || userForm.name.$invaild"
+          >Name is required</span
+        >
+        <br />
+        <br />
+        <input
+          type="number"
+          ng-model="mobile"
+          name="mobile"
+          placeholder="enter
+mobile number..."
+        />
+        <span
+          ng-show="userForm.mobile.$touched ||
+userForm.mobile.$invaild"
+          >Mobile munber required</span
+        >
+        <br />
+        <br />
+        <textarea rows="6" cols="19" placeholder="address"></textarea>
+        <br />
+        <br />
+        <button type="submit" ng-click="done()">Submit</button>
+      </form>
+    </div>
+  </body>
+  <script>
+    var app = angular.module("mainApp", []);
+    app.controller("mainController", function ($scope) {});
+  </script>
+</html>

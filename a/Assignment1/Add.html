@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><title>Addition</title></head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <body ng-app="mainApp" ng-controller="mainController">
+    <div class="main">
+      <input
+        type="number"
+        ng-model="num1"
+        placeholder="Enter first number..."
+      />
+      <br />
+      <input
+        type="number"
+        ng-model="num2"
+        placeholder="Enter second number..."
+      />
+      <br />
+      <button type="submit" ng-click="done()">Do additions</button>
+      <p>The Addition of two number is <span ng-bind="result"> </span></p>
+    </div>
+  </body>
+  <script>
+    var app = angular.module("mainApp", []);
+    app.controller("mainController", function ($scope) {
+      $scope.done = function () {
+        $scope.result = parseInt($scope.num1) + parseInt($scope.num2);
+      };
+    });
+  </script>
+</html>

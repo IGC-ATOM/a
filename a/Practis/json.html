@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&family=Roboto:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link href="index.css" rel="stylesheet" />
+    <title>Angular</title>
+  </head>
+  <body ng-app="mainForm" ng-controller="controllerForm">
+    <div class="formContainer">
+      <h1>ng-option Form</h1>
+      <form>
+        <table>
+          <tr>
+            <td>
+              <p>Username</p>
+            </td>
+            <td>
+              <input
+                type="text"
+                ng-model="user.username"
+                ng-modeloptions="{debounce:1000}"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p>Age</p>
+            </td>
+            <td>
+              <input
+                type="number"
+                ng-model-options="{ updateOn:'blur' }"
+                ngmodel="user.age"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p>Email</p>
+            </td>
+            <td><input type="email" ng-model="user.email" /></td>
+          </tr>
+          <tr>
+            <td>
+              <p>message</p>
+            </td>
+            <td>
+              <textarea cols="21" rows="8" ngmodel="user.message"></textarea>
+            </td>
+          </tr>
+        </table>
+      </form>
+      <pre>{{user | json}}</pre>
+    </div>
+  </body>
+  <script>
+    var app = angular.module("mainForm", []);
+    app.controller("controllerForm", function ($scope) {
+      $scope.user = {
+        username: "",
+        age: "",
+        email: "",
+        message: "",
+      };
+    });
+  </script>
+</html>

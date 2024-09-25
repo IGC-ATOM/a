@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+</head>
+<body ng-app="myApp" ng-controller="myController">
+
+    <div ng-show="Form">
+        <form name="F">
+            <h3>Form for Booking E-Ticket</h3>
+            <table>
+
+
+                <tr>
+                    <td>Name:</td>
+                    <td>
+                        <input type="text" ng-model="pname"  name="zname" placeholder="Enter your name...">
+                        <label ng-show="F.zname.$touched || F.zname.$invalid ">plz enter name</label>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>Age:</td>
+                    <td><input type="number" ng-model="page" placeholder="ENter your age..."></td>
+                </tr>
+
+                <tr>
+                    <td>City:</td>
+                    <td><input type="text" ng-model="pcity" placeholder="Enter your city..."></td>
+                </tr>
+
+                <tr>
+                    <td>Gender:</td>
+                    <td><input type="radio" name="gender" value="Male" ng-model="pgender">Male:
+                        <input type="radio" name="gender" value="Female" ng-model="pgender">Female:</td>
+                </tr>
+
+                <tr>
+                    <td>Email</td>
+                    <td><input type="email" ng-model="pemail" placeholder="Enter your email..."></td>
+                </tr>
+
+                <tr>
+                    <td>Choose-Date:</td>
+                    <td><input type="date" ng-model="pdate"></td>
+                </tr>
+
+                <tr>
+                 <td><button type="submit" ng-click="booking()">Book-Now</button></td>
+                 <td><button type="reset">Reset</button></td>
+                </tr>
+
+            </table>
+        </form>
+    </div>
+
+    <div ng-show="Ticket" >
+
+        <form name="T">
+            <h3>E-Ticket Booked</h3>
+            <table>
+
+                <tr>
+                    <td>Name:</td>
+                    <td>{{pname}}</td>
+                </tr>
+
+                <tr>
+                    <td>Age:</td>
+                    <td>{{page}}</td>
+                </tr>
+                
+                <tr>
+                    <td>City:</td>
+                    <td>{{pcity}}</td>
+                </tr>
+                <tr>
+                    <td>Gender:</td>
+                    <td>{{pgender}}</td>
+                </tr>
+
+                <tr>
+                    <td>Email:</td>
+                    <td>{{pemail}}</td>
+                </tr>
+                <tr>
+                    <td>Date:</td>
+                    <td>{{pdate | date:'yyyy-mm-dd'}}</td>
+                </tr>
+
+                <tr>
+                     <td><button type="submit" ng-click="goBack()">Go-Back</button></td>
+                </tr>
+
+            </table>
+        </form>
+
+    </div>
+
+</body>
+
+
+<script>
+
+        var app=angular.module('myApp',[]);
+        app.controller('myController', function($scope){
+
+            $scope.Ticket=false;
+            $scope.Form=true;
+
+            $scope.booking=function(){
+                $scope.Ticket=true;
+                $scope.Form=false;
+            };
+
+            $scope.goBack=function(){
+                $scope.Ticket=false;
+                $scope.Form=true;
+            };
+
+
+
+        });
+</script>
+</html>

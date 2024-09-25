@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&family=Rob
+oto:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Angular</title>
+    <link href="index.css" rel="stylesheet" />
+  </head>
+  <style>
+    input.ng-invalid.ng-touched {
+      background-color: #fa787e;
+    }
+    input.ng-valid.ng-touched {
+      background-color: #78fa89;
+    }
+  </style>
+  <body ng-app="mainForm" ng-controller="FormController">
+    <div class="formContainer">
+      <h1>Login Page</h1>
+      <form class="formclass">
+        <table>
+          <tr>
+            <td>
+              <p>User Name</p>
+            </td>
+            <td>
+              <input
+                type="text"
+                ng-model="login.username"
+                placeholder="username"
+                required
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p>Email</p>
+            </td>
+            <td>
+              <input
+                type="email"
+                ng-model="login.email"
+                placeholder="email"
+                required
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p>Mobile Number</p>
+            </td>
+            <td>
+              <input
+                type="number"
+                ng-model="login.mobile"
+                placeholder="mobile number"
+                required
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p>gender</p>
+            </td>
+            <td>
+              <input
+                type="radio"
+                name="gender"
+                ng-model="login.pgender"
+                value="male"
+              />Male
+              <input
+                type="radio"
+                name="gender"
+                ng-model="login.pgender"
+                value="female"
+              />Female
+            </td>
+          </tr>
+          <tr></tr>
+        </table>
+      </form>
+    </div>
+  </body>
+  <script>
+    var app = angular.module("mainForm", []);
+    app.controller("FormController", function ($scope) {});
+  </script>
+</html>
+

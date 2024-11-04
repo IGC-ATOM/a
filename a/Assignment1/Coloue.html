@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ng-style Color</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+    <style type="text/css">
+      .bg-color {
+        background-color: yellow;
+        padding: 10px;
+        font-size: 18px;
+      }
+    </style>
+  </head>
+  <body ng-app="app" style="text-align: center">
+    <h1 style="color: green">Sorting Techniques</h1>
+    <h2>ng-style Directive</h2>
+    <div ng-controller="controllerName">
+      Input:
+      <input type="text" ng-model="color" placeholder="Enter any color." />
+      <p ng-repeat="i in sort" ng-style="{color:color}">
+        <span class="bg-color"> Name: {{i.name}} </span>
+      </p>
+    </div>
+    <script>
+      var app = angular.module("app", []);
+      app.controller("controllerName", [
+        "$scope",
+        function ($scope) {
+          $scope.sort = [
+            {
+              name: "Merge sort",
+            },
+            {
+              name: "Quick sort",
+            },
+            {
+              name: "Radix sort",
+            },
+          ];
+        },
+      ]);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="palindromeApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palindrome Checker</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="PalindromeController">
+
+    <h1>Palindrome Checker</h1>
+    <input type="text" ng-model="inputString" placeholder="Enter a string" />
+    <button ng-click="checkPalindrome()">Check</button>
+
+    <h2 ng-if="result !== undefined">
+        {{ inputString }} is {{ result ? 'a palindrome' : 'not a palindrome' }}
+    </h2>
+
+    <script>
+        angular.module('palindromeApp', [])
+            .controller('PalindromeController', function($scope) {
+                $scope.checkPalindrome = function() {
+                    const str = $scope.inputString.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+                    $scope.result = str === str.split('').reverse().join('');
+                };
+            });
+    </script>
+
+</body>
+</html>

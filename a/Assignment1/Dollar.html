@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  <title>total in dollar</title>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<body ng-app="mainApp" ng-controller="mainController">
+    <div class="main">
+        <input type="number" ng-model="product1" placeholder="Enter 1 product price" >
+ <br />
+ <input type="number" ng-model="product2" placeholder="Enter 2 product price" >
+ <br />
+ <input type="number" ng-model="product3" placeholder="Enter 3 product price" >
+ <br />
+ <input type="number" ng-model="product4" placeholder="Enter 4 product price" >
+ <br />
+ <input type="number" ng-model="product5" placeholder="Enter 5 product price" >
+ <br />
+ <button type="submit" ng-click="done()">Get Value</button>
+ <p>The Total of all Product is: <span ng-bind="total"></span></p>
+ <p>Price of Product in Dollar: <span ng-bind="dollar"></span></p>
+ </div>
+</body>
+ <script>
+ var app = angular.module('mainApp', []);
+ app.controller('mainController', function ($scope) {
+ $scope.done = function(){
+ $scope.total = $scope.product1 + $scope.product2 + $scope.product3 +
+$scope.product4 + $scope.product5;
+ $scope.dollar = $scope.total / 83;
+ }
+ });
+ </script>
+    
+
+</html>

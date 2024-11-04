@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>   <title>Term's & Conditions</title></head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <body
+    ng-app="mainApp"
+    ng-controller="mainController"
+    ng-init="data = { university:
+    'Indus University', course: 'MCA' }"
+  >
+    <div class="main">
+      <p>
+        <input type="checkbox" ng-model="check" />Accpet The Term's & Conditions
+      </p>
+      <div ng-if="check">
+        <span>Now You are a part of Indus University.</span>
+        <p>
+          <label for="requiredField">Required Field:</label>
+          <input
+            type="text"
+            id="requiredField"
+            placeholder="Enter your IU ID"
+            required
+          />
+        </p>
+      </div>
+    </div>
+  </body>
+  <script>
+    var app = angular.module("mainApp", []);
+    app.controller("mainController", function ($scope) {
+      $scope.check = false;
+    });
+  </script>
+</html>

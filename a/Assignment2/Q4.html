@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+</head>
+
+<body>
+
+    <div ng-app="myApp" ng-controller="con">
+
+        <form name="form" method="post" ng-submit="submitForm()">
+
+            <table border="2" style="width: 400px; height: 100px;">
+
+                <tr style="background-color:#fdf5e2;">
+                    <td colspan="2" style="text-align: center; color: red;">
+                        <h1>Registration Form</h1>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="text-align: center; background-color:#90D5FF;">Enter Name :</td>
+                    <td style="background-color: #90D5FF;">
+                        <input type="text" name="name" ng-model="name" required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="text-align: center; background-color:#90D5FF;">Enter Password :</td>
+                    <td style="background-color: #90D5FF;">
+                        <input type="password" name="password" ng-model="password" required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="text-align: center; background-color:#90D5FF;">Enter Address :</td>
+                    <td style="background-color: #90D5FF;">
+                        <textarea name="address" ng-model="address" required></textarea>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="text-align: center; background-color:#90D5FF;">Select Game :</td>
+                    <td style="background-color: #90D5FF;">
+                        <input type="checkbox" ng-model="games.hockey"> Hockey<br>
+                        <input type="checkbox" ng-model="games.football"> Football<br>
+                        <input type="checkbox" ng-model="games.badminton"> Badminton<br>
+                        <input type="checkbox" ng-model="games.cricket"> Cricket<br>
+                        <input type="checkbox" ng-model="games.volleyball"> Volleyball<br>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="text-align: center; background-color:#90D5FF;">Gender :</td>
+                    <td style="background-color: #90D5FF;">
+                        <input type="radio" name="gender" ng-model="gender" value="Male"> Male
+                        <input type="radio" name="gender" ng-model="gender" value="Female"> Female
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="text-align: center; background-color:#90D5FF;">Select your age :</td>
+                    <td style="background-color: #90D5FF;">
+                        <select ng-model="selectedAge" required>
+                            <option value="default" disabled>Select</option>
+                            <option ng-repeat="age in ages">{{age}}</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="text-align: center; background-color:#90D5FF;">Select Photo</td>
+                    <td style="background-color: #90D5FF;">
+                        <input type="file" name="photo" ng-model="photo">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="background-color: #90D5FF; text-align: center;" colspan="2">
+                        <input type="button" name="cancel" value="Cancel" ng-click="cancelForm()">
+                        <input type="reset" name="reset" value="Reset">
+                        <input type="submit" name="submit" value="Submit form">
+                    </td>
+                </tr>
+
+            </table>
+
+        </form>
+
+        <div ng-if="submittedForm">
+
+            <h1>Form Detail</h1>
+            <p>Name : {{name}}</p>
+            <p>Password : {{password}}</p>
+            <p>Address : {{address}}</p>
+            <p>Games : 
+                <span ng-repeat="(key, value) in games" ng-if="value">{{key}} </span>
+            </p>
+            <p>Gender : {{gender}}</p>
+            <p>Age : {{selectedAge}}</p>
+            <p>Photo : {{photo}}</p>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        var app = angular.module("myApp", []);
+
+        app.controller('con', function ($scope) {
+            $scope.ages = [];
+            for (var i = 11; i <= 25; i++) {
+                $scope.ages.push(i);
+            }
+
+            $scope.games = {};
+
+            $scope.submittedForm = false;
+
+            $scope.submitForm = function () {
+                if ($scope.form.$valid) {
+                    $scope.submittedForm = true;
+                }
+            };
+
+            $scope.cancelForm = function () {
+                $scope.name = "";
+                $scope.password = "";
+                $scope.address = "";
+                $scope.gender = "";
+                $scope.selectedAge = "default";
+                $scope.games = {};
+                $scope.photo = null;
+                $scope.form.$setPristine();
+                $scope.form.$setUntouched();
+            };
+
+        });
+
+    </script>
+
+</body>
+
+</html>

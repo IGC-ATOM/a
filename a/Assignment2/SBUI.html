@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+<body ng-app="mainApp" ng-controller="mainController">
+
+    <table>
+        <h3><u> Search Bye User Input </u></h3>
+        <tr>
+            <th>Name</th>
+            <th>TotalMarks</th>
+            <th>Rank</th>
+        </tr>
+        <input type="search" ng-model="search">
+        <tr ng-repeat="s in student | filter:search ">
+
+            <td> {{s.name}} </td>
+            <td> {{s.TotalMarks}} </td>
+            <td> {{s.Rank}} </td>
+        </tr>
+    </table>
+
+</body>
+<script>
+
+    var app = angular.module('mainApp', []);
+
+    app.controller('mainController', function ($scope) {
+
+        $scope.student = [
+            { name: "Parth", TotalMarks: 80, Rank: 1 },
+            { name: "Mahipal", TotalMarks: 90, Rank: 9 },
+            { name: "Vatsal", TotalMarks: 79, Rank: 6 },
+            { name: "Paras", TotalMarks: 69, Rank: 5 },
+            { name: "Jatvik", TotalMarks: 79, Rank: 2 },
+            { name: "Kshitij", TotalMarks: 68, Rank: 4 },
+            { name: "Karan", TotalMarks: 60, Rank: 8 },
+            { name: "Vansh", TotalMarks: 50, Rank: 7 },
+            { name: "Maan", TotalMarks: 60, Rank: 3 },
+            { name: "Jay", TotalMarks: 70, Rank: 10 }
+
+        ]
+    });
+
+</script>
+
+</html>
+
+

@@ -1,0 +1,59 @@
+<html>
+
+<head>
+    <title>Pick using switch</title>
+</head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+
+<body ng-app="mainapp" ng-controller="maincontroller">
+
+<p>Pick any one choice from the below course...</p>
+
+Undergraduate<input type='radio' ng-model="course" value="Under" name="course">
+<br/> 
+Postgraduate<input type='radio' ng-model="course"  value="post" name="course">
+
+<div ng-switch="course">
+    
+    <div ng-switch-when="Under">
+        
+        <br />
+            <input type='radio' ng-model="sub" value="BBA" name="subcourse">BBA(CA)
+            <input type='radio' ng-model="sub" value="BCA" name="subcourse">BCA
+            <input type='radio' ng-model="sub" value="Sc" name="subcourse">B.Sc
+        
+        <div ng-switch="sub">
+            <p ng-switch-when="BBA"> -> You are BBA Student</p>
+            <p ng-switch-when="BCA"> -> You are BCA Student</p>
+            <p ng-switch-when="Sc"> -> You are B.Sc Student</p>
+        </div>
+    </div>
+    
+    
+    <div ng-switch-when="post">
+    <br />
+            <input type='radio' ng-model="subpg" value="M.Sc" name="subcourse">M.Sc
+            <input type='radio' ng-model="subpg" value="M.Sc(CA)" name="subcourse">M.Sc(CA)
+            <input type='radio' ng-model="subpg" value="MCA" name="subcourse">MCA
+        
+        <div ng-switch="subpg">
+            <p ng-switch-when="M.Sc"> -> You are M.Sc Student</p>
+            <p ng-switch-when="M.Sc(CA)"> -> You are M.Sc(CA) Student</p>
+            <p ng-switch-when="MCA"> -> You are MCA Student</p>
+        </div>
+    
+    </div>
+
+</div>
+
+</body>
+
+<script>
+    var app = angular.module('mainapp', [])
+    
+    app.controller('maincontroller', function($scope){
+        
+    })
+</script>
+</html>

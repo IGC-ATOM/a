@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><title> The Median</title></head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <body
+    ng-app="mainApp" ng-controller="mainController"   ng-init="array=[1,15,19,2,40]">
+    <div class="main">
+      <p>The Median<span ng-bind="median"></span></p>
+    </div>
+  </body>
+  <script>
+    var app = angular.module("mainApp", []);
+    app.controller("mainController", function ($scope) {
+      $scope.array = [1, 15, 19, 2, 40];
+      var median_value = $scope.array.slice().sort(function (a, b) {
+        return a - b;
+      });
+      var length = median_value.length;
+      var mid = Math.floor(length / 2);
+      if (length % 2 === 0) {
+        $scope.median = (median_value[mid + 1] + median_value[mid]) / 2;
+      } else {
+        $scope.median = median_value[mid];
+      }
+    });
+  </script>
+</html>

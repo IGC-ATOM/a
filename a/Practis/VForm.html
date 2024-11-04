@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="myController">
+
+    <div ng-show="Form">
+        <form name="F" novalidate>
+            <h3>Form for Booking E-Ticket</h3>
+            <table>
+
+                <tr>
+                    <td>Name:</td>
+                    <td>
+                        <input type="text" ng-model="pname" name="zname" placeholder="Enter your name..." ng-required="true" ng-minlength="3" ng-maxlength="30">
+                        <span ng-show="F.zname.$touched && F.zname.$invalid" style="color:red;">
+                            <span ng-show="F.zname.$error.required">Name is required.</span>
+                            <span ng-show="F.zname.$error.minlength">Name must be at least 3 characters long.</span>
+                            <span ng-show="F.zname.$error.maxlength">Name cannot be more than 30 characters.</span>
+                        </span>
+                    </td>
+                </tr>
+                
+               
+                <tr>
+                    <td>Age:</td>
+                    <td>
+                        <input type="number" ng-model="page" name="age" placeholder="Enter your age..." ng-required="true" ng-min="18" ng-max="100">
+                        <span ng-show="F.age.$touched && F.age.$invalid" style="color:red;">
+                            <span ng-show="F.age.$error.required">Age is required.</span>
+                            <span ng-show="F.age.$error.min">Age must be at least 18.</span>
+                            <span ng-show="F.age.$error.max">Age cannot be more than 100.</span>
+                        </span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>City:</td>
+                    <td>
+                        <input type="text" ng-model="pcity" name="city" placeholder="Enter your city..." ng-required="true">
+                        <span ng-show="F.city.$touched && F.city.$invalid" style="color:red;">
+                            <span ng-show="F.city.$error.required">City is required.</span>
+                        </span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Gender:</td>
+                    <td>
+                        <input type="radio" name="gender" value="Male" ng-model="pgender" ng-required="true">Male
+                        <input type="radio" name="gender" value="Female" ng-model="pgender" ng-required="true">Female
+                        <span ng-show="F.gender.$touched && F.gender.$invalid" style="color:red;">
+                            <span ng-show="F.gender.$error.required">Gender is required.</span>
+                        </span>
+                    </td>
+                </tr>
+
+          
+                <tr>
+                    <td>Email:</td>
+                    <td>
+                        <input type="email" ng-model="pemail" name="email" placeholder="Enter your email..." ng-required="true" ng-pattern="/^.+@.+\..+$/">
+                        <span ng-show="F.email.$touched && F.email.$invalid" style="color:red;">
+                            <span ng-show="F.email.$error.required">Email is required.</span>
+                            <span ng-show="F.email.$error.pattern">Please enter a valid email address.</span>
+                        </span>
+                    </td>
+                </tr>
+
+      
+                <tr>
+                    <td>Choose-Date:</td>
+                    <td>
+                        <input type="date" ng-model="pdate" name="date" ng-required="true">
+                        <span ng-show="F.date.$touched && F.date.$invalid" style="color:red;">
+                            <span ng-show="F.date.$error.required">Date is required.</span>
+                        </span>
+                    </td>
+                </tr>
+
+          
+                <tr>
+                    <td>
+                        <button type="submit" ng-click="booking()" ng-disabled="F.$invalid">Book-Now</button>
+                    </td>
+                    <td>
+                        <button type="reset">Reset</button>
+                    </td>
+                </tr>
+
+            </table>
+        </form>
+    </div>
+
+    <div ng-show="Ticket">
+        <form name="T">
+            <h3>E-Ticket Booked</h3>
+            <table>
+
+                <tr>
+                    <td>Name:</td>
+                    <td>{{pname}}</td>
+                </tr>
+
+                <tr>
+                    <td>Age:</td>
+                    <td>{{page}}</td>
+                </tr>
+                
+                <tr>
+                    <td>City:</td>
+                    <td>{{pcity}}</td>
+                </tr>
+
+                <tr>
+                    <td>Gender:</td>
+                    <td>{{pgender}}</td>
+                </tr>
+
+                <tr>
+                    <td>Email:</td>
+                    <td>{{pemail}}</td>
+                </tr>
+
+                <tr>
+                    <td>Date:</td>
+                    <td>{{pdate | date:'yyyy-MM-dd'}}</td>
+                </tr>
+
+                <tr>
+                    <td><button type="submit" ng-click="goBack()">Go-Back</button></td>
+                </tr>
+
+            </table>
+        </form>
+    </div>
+
+</body>
+
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('myController', function($scope) {
+        $scope.Ticket = false;
+        $scope.Form = true;
+
+        $scope.booking = function() {
+            if ($scope.F.$valid) {
+                $scope.Ticket = true;
+                $scope.Form = false;
+            }
+        };
+
+        $scope.goBack = function() {
+            $scope.Ticket = false;
+            $scope.Form = true;
+        };
+    });
+</script>
+</html>

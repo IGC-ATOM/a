@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Simple Interest Calculator</title>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<body ng-app="mainApp" ng-controller="mainController">
+    <div class="main">
+
+        Principal amount: <input type="number" ng-model="principal" placeholder="Enter Amount" >
+        <br />
+        Rate of interest: <input type="number" ng-model="rate" placeholder="Enter interest" >
+        <br />
+        Time period: <input type="number" ng-model="time" placeholder="Enter the time period " >
+        <br />
+        <button type="submit" ng-click="calculateSimpleInterest()">Calculate </button>
+        <br />
+        <p>The Simple Interest is <span ng-bind="simpleInterest"></span></p>
+        <p>The Total Amount is <span ng-bind="totalAmount"></span></p>
+    </div>
+    
+    <script>
+        var app = angular.module('mainApp', []);
+        app.controller('mainController', function ($scope) {
+            $scope.calculateSimpleInterest = function(){
+                $scope.simpleInterest = "₹ " + (parseFloat($scope.principal) * parseFloat($scope.rate) * parseFloat($scope.time)) / 100;
+                $scope.totalAmount = "₹ " + (parseFloat($scope.principal) + parseFloat($scope.simpleInterest.replace("₹ ", "")));
+            };
+        });
+    </script>
+</html>

@@ -1,0 +1,154 @@
+---------------------------------------------------
+m2lo-Form
+
+<!DOCTYPE html>
+<html lang="en">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+
+<head>
+    <title>Contact Us</title>
+</head>
+
+<body>
+    <div class="parent_div">
+        <h1>We'd Love to Hear From You!</h1>
+        <h6>If you have any questions, feedback, or just want to say hello, please fill out the form below. Our team
+            will
+            get back to you as soon as possible.</h6>
+        <form>
+            <div class="main_form">
+                <div class="upper_block">
+                    <div>
+                        <p>First Name</p>
+                        <input type="text" placeholder="Place Your Name">
+
+                    </div>
+
+
+                    <div>
+                        <p>Last Name</p>
+                        <input type="text" placeholder="Place Your last Name">
+
+                    </div>
+
+                    <div>
+                        <p>Email</p>
+                        <input type="email" placeholder="Email">
+
+                    </div>
+
+                    <div>
+                        <p>Phone No.</p>
+                        <input type="number" placeholder="Mobile Number">
+
+                    </div>
+                </div>
+
+                <div>
+                    <p>Message</p>
+                    <textarea rows="12" cols="124" placeholder="Write a Message"></textarea>
+                </div>
+
+                <div class="btn">
+                    <button type="submit">Submit</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
+
+
+body{
+    margin: 0;
+    padding: 0;
+    font-family: Poppins;
+}
+.parent_div{
+    height:100vh;
+    background-color: #433878;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color:#fff;
+}
+
+.main_form{
+    background-color: #7E60BF;
+    color: #FFF;
+    height: 60vh;
+    width: 100vh;
+    border-radius:20px;
+    text-align: start;
+    padding: 2rem 2rem;
+    text-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.upper_block{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+}
+
+.btn{
+    text-align: center;
+}
+
+.parent_div h1{
+    font-size: 2rem;
+    padding: 0;
+    line-height: 0;
+    width: 40rem;
+    font-weight: 600;
+}
+
+.parent_div h6{
+    font-size: 0.9rem;
+    width: 40rem;
+    font-weight: 400;
+}
+
+input{
+    border: none;
+    outline: none;
+    width: 90%;
+    padding: 0 0.8rem 0.8rem 0;
+    color: #fff;
+    border-bottom: 1px solid white;
+    background-color: transparent;
+}
+
+textarea{
+    width: 100%;
+    border: none;
+    border: 1px solid white;
+    outline: none;
+    color: #fff;
+    background-color: transparent;
+}
+::placeholder {
+    color: #fff;
+    opacity: 0.5;
+  }
+
+  button{
+    padding: 1rem 4rem;
+    color: black;
+    background-color: #FFF;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+
+  }

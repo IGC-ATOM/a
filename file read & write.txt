@@ -46,3 +46,11 @@ server.listen(8080, () => {
     console.log('Server is running on 8080');
 });
 
+---------------------------------------------------
+palindrom
+
+const ispli = str => str === str.split('').reverse().join('');
+
+console.log(ispli('level'));
+
+

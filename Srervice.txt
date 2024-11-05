@@ -1,0 +1,73 @@
+Step1: npm install -g @angular/cli
+
+Step2: ng v 
+ 
+Step3: ng new test1 --no-standalone
+
+Step4: ng g s test1
+
+Step5: ng g c demo 
+
+Step6: ng serve
+
+
+---------------------------------------------------
+Srervice
+
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ProductDataService {
+
+  private productData = [
+    { id: 1, name: 'Mose', price: 700},
+    { id: 2, name: 'Keybord', price: 1700},
+    { id: 3, name: 'Headphone', price: 2000}
+  ]
+
+  constructor() { }
+
+  getProducts(){
+    return this.productData;
+  }
+
+}
+
+---------------------------------------------------
+Component
+
+import { Component } from '@angular/core';
+
+import { ProductDataService } from '../product-data.service';
+
+@Component({
+  selector: 'app-product-list',
+  templateUrl: './product-list.component.html',
+  styleUrl: './product-list.component.css'
+})
+export class ProductListComponent {
+
+  products: any[] = [];
+
+  constructor(private productservice: ProductDataService){}
+
+  ngOnInit(): void{
+
+    this.products=this.productservice.getProducts();
+  }
+  
+}
+ 
+---------------------------------------------------
+html
+
+<h3> Liist Of Products</h3>
+<ul>
+    <li *ngFor="let p of products"> 
+    {{p.name}} - 
+    {{p.price}}    
+    </li>
+</ul>
+

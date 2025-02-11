@@ -1,0 +1,680 @@
+1. Create a MVC application having fields like ID,Name,Enrollment no.,University Name and address and display them.
+
+->model:Student.cs
+
+namespace WebApplication1.Models
+{
+    public class Student
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int EnrollmentNo { get; set; }
+        public string UniversityName { get; set; }
+    }
+}
+
+->controller:StudentController.cs
+
+using System.Collections.Generic;
+using System.Web.Mvc;
+using WebApplication1.Models;
+
+namespace WebApplication1.Controllers
+{
+    public class StudentController : Controller
+    {
+
+
+
+        public ActionResult Student()
+        {
+            List<Student> students = new List<Student> {
+            new Student { Id = 1, Name = "Parth", EnrollmentNo = 90, UniversityName = "Indus" },
+            new Student { Id = 2, Name = "Mahipal", EnrollmentNo = 77, UniversityName = "Indus" },
+            new Student { Id = 3, Name = "Suju", EnrollmentNo = 16, UniversityName = "Indus" }
+            };
+            return View(students);
+        }
+    }
+}
+
+->view:Student.cshtml
+
+@model List<WebApplication1.Models.Student>
+@{
+    ViewBag.Title = "Index";
+}
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Enrollment No.</th>
+            <th>University Name</th>
+         
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model)
+        {
+            <tr>
+                <td>@student.Id</td>
+                <td>@student.Name</td>
+                <td>@student.EnrollmentNo</td>
+                <td>@student.UniversityName</td>
+            </tr>
+        }
+    </tbody>
+</table>
+____________________________________________________________
+
+2. Create a product controller with ID,Name and Price and render them on the browser.
+model:
+
+namespace WebApplication1.Models
+{
+    public class Product
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+    }
+}
+
+controller:
+
+using System.Collections.Generic;
+using System.Web.Mvc;
+using WebApplication1.Models;
+
+namespace WebApplication1.Controllers
+{
+    public class ProductController : Controller
+    {
+       
+
+        public ActionResult Product()
+
+        {
+            List<Product> products = new List<Product> {
+                new Product{Id= 1, Name="Blancate", Price = 2500},
+                new Product{Id= 2, Name="Metres", Price = 4500},
+                new Product{Id= 3, Name="Pillo", Price = 4500}
+
+            };
+
+            return View(products);
+        }
+    }
+}
+
+view:
+
+@model List<WebApplication1.Models.Product>
+@{
+    ViewBag.Title = "Product";
+}
+
+<table border="1">
+    
+    <thead>
+     <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+    </tr>
+    </thead>
+    @foreach (var product in Model)
+    { 
+        <tr>
+            <td>@product.Id</td>
+            <td>@product.Name</td>
+            <td>@product.Price</td>
+        </tr>
+        }
+    <tbody>
+
+    </tbody>
+
+</table>
+____________________________________________________________
+
+3. Create an MVC application to demonstrate the Strongly Typed views.
+model:
+
+namespace WebApplication1.Models
+{
+    public class ElectronicsProduct
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Price { get; set; }
+    }
+}   
+
+controller:
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using WebApplication1.Models;
+
+namespace WebApplication1.Controllers
+{
+    public class ElectronicsController : Controller
+    {
+        // GET: Electronics
+        public ActionResult ElectronicsProduct()
+        {
+            List<ElectronicsProduct> electronics = new List<ElectronicsProduct>
+            {
+                new ElectronicsProduct {Id = 1, Name = "T.V.", Price=15000},
+                new ElectronicsProduct {Id = 2, Name = "Fridge", Price=15000},
+                new ElectronicsProduct {Id = 3, Name = "Speacker", Price=15000}
+            };
+            return View(electronics);
+        }
+    }
+}
+
+view:
+
+@model List<WebApplication1.Models.ElectronicsProduct>
+@{
+    ViewBag.Title = "ElectronicsProduct";
+}
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Pricr</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Id</td>
+                <td>@product.Name</td>
+                <td>@product.Price</td>
+            </tr>
+        }
+    </tbody>
+</table>
+____________________________________________________________
+
+4. Explain The Razor View Engine in detail with appropriate example.
+
+->model:Student.cs
+
+namespace WebApplication1.Models
+{
+    public class Student
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int EnrollmentNo { get; set; }
+        public string UniversityName { get; set; }
+    }
+}
+
+->controller:StudentController.cs
+
+using System.Collections.Generic;
+using System.Web.Mvc;
+using WebApplication1.Models;
+
+namespace WebApplication1.Controllers
+{
+    public class StudentController : Controller
+    {
+
+
+
+        public ActionResult Student()
+        {
+            List<Student> students = new List<Student> {
+            new Student { Id = 1, Name = "Parth", EnrollmentNo = 90, UniversityName = "Indus" },
+            new Student { Id = 2, Name = "Mahipal", EnrollmentNo = 77, UniversityName = "Indus" },
+            new Student { Id = 3, Name = "Suju", EnrollmentNo = 16, UniversityName = "Indus" }
+            };
+            return View(students);
+        }
+    }
+}
+
+->view:Student.cshtml
+
+@model List<WebApplication1.Models.Student>
+@{
+    ViewBag.Title = "Index";
+}
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Enrollment No.</th>
+            <th>University Name</th>
+         
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model)
+        {
+            <tr>
+                <td>@student.Id</td>
+                <td>@student.Name</td>
+                <td>@student.EnrollmentNo</td>
+                <td>@student.UniversityName</td>
+            </tr>
+        }
+    </tbody>
+</table>
+____________________________________________________________
+
+5. Create an application for Music Store which contains the (AlbumId, Title,Artist,Genre,Price) with a shared view file.
+
+
+moel: Album.cs
+using System.ComponentModel.DataAnnotations;
+namespace Practical_ADMS_.Models
+{
+    public class Album
+    {
+        public int music_id { get; set; }
+
+
+        [Required]
+        public string Title { get; set; }
+
+
+        [Required]
+        public string Artist { get; set; }
+
+
+        [Required]
+        public string Genre { get; set; }
+
+
+        [Required]
+        public decimal Price { get; set; }
+    }
+}
+
+
+controller: MusicStoreController.cs
+
+
+using Practical_ADMS_.Models;
+
+
+namespace Practical_ADMS_.Controllers
+{
+    public class MusicStoreController : Controller
+    {
+        public List<Album> albums = new List<Album>
+            {
+                new Album { music_id = 1, Title = "Bring It", Artist = "M2LO", Genre = "Dance Music", Price = 1000 },
+                new Album { music_id = 2, Title = "Where Are U", Artist = "M2LO", Genre = "Progressive House", Price = 5000 }
+            };
+        public ActionResult Index()
+        {
+            return View(albums);
+        }
+
+
+        public ActionResult Details(int id)
+        {
+            var album = albums.Find(a => a.music_id == id);
+            if (album == null)
+            {
+                return HttpNotFound();
+            }
+            return View(album); 
+        }
+    }
+}
+
+
+view:  Index.cshtml
+
+
+@model List<Practical_ADMS_.Models.Album>
+
+
+<h2>Music Store</h2>
+
+
+<table class="table">
+    <tr>
+        <th>Title</th>
+        <th>Artist</th>
+        <th>Genre</th>
+        <th>Price</th>
+        <th>Details</th>
+    </tr>
+
+
+    @foreach (var album in Model)
+    {
+    <tr>
+        <td>@album.Title</td>
+        <td>@album.Artist</td>
+        <td>@album.Genre</td>
+        <td>@album.Price</td>
+        <td><a href="@Url.Action("Details", "MusicStore", new { id = album.music_id })">View</a></td>
+    </tr>
+    }
+</table>
+
+
+
+
+view: Details.cshtml
+@model Practical_ADMS_.Models.Album
+
+
+<h2>@Model.Title</h2>
+<ul>
+    <li><strong>Artist:</strong> @Model.Artist</li>
+    <li><strong>Genre:</strong> @Model.Genre</li>
+    <li><strong>Price:</strong> @Model.Price</li>
+</ul>
+
+
+<a href="@Url.Action("Index", "MusicStore")">Back to List</a>
+
+____________________________________________________________
+
+6. Create a scaffolding example of CRUD operations with fields : Number of systems & Number of users.
+
+
+
+1. Install Entity Framework from NuGet Package Manager in Solution Explorer.
+2. Create a Model File named UserData.cs.
+3. Create Another Model File named UserDataContext.cs.
+4. Enable Migrations using the Package Manager Console:
+-> Run Enable-Migrations.
+-> Run Add-Migration InitialCreate.
+-> Run Update-Database.
+5. Create a Controller: 
+-> Use Entity Framework Controller for scaffolding.
+6. Run the Index.cshtml file to test the application.
+
+
+
+1-model: SystemDetails.cs
+
+using System.ComponentModel.DataAnnotations;
+namespace ScaffoldingExample.Models
+{
+    public class SystemDetails
+    {
+        [Key]
+        public int Id { get; set; }
+
+
+        [Required]
+        public int NumberOfSystems { get; set; }
+
+
+        [Required]
+        public int NumberOfUsers { get; set; }
+    }
+}
+
+
+2-model: ApplicationDbContext.cs
+
+using System.Data.Entity;
+namespace ScaffoldingExample.Models
+{
+    public class ApplicationDbContext : DbContext
+    {
+        public ApplicationDbContext() : base("DefaultConnection") { }
+
+
+        public DbSet<SystemDetails> SystemDetails { get; set; }
+    }
+}
+
+____________________________________________________________
+
+7. Create scaffolding application of CRUD operation with USER ID,USER_NAME,USER_DEPT,USER_SALRY, USER_DOB.
+
+
+
+1. Install Entity Framework from NuGet Package Manager in Solution Explorer.
+2. Create a Model File named UserData.cs.
+3. Create Another Model File named UserDataContext.cs.
+4. Enable Migrations using the Package Manager Console:
+-> Run Enable-Migrations.
+-> Run Add-Migration InitialCreate.
+-> Run Update-Database.
+5. Create a Controller: 
+-> Use Entity Framework Controller for scaffolding.
+6. Run the Index.cshtml file to test the application.
+
+
+
+
+1-model: userDataDetails.cs
+using System.ComponentModel.DataAnnotations;
+
+
+namespace UserDataDatabase.Models
+{
+    public class UserDataDetails
+    {
+        [Key]
+        public int User_id { get; set; }
+        [Required]
+        public string User_name { get; set; }
+        [Required]
+        public string User_email { get; set; }
+        [Required]
+        public int User_DOB { get; set; }
+        [Required]
+        public string User_gender { get; set; }
+    }
+}
+
+2-model: UserDataDatabaseContext.cs
+
+using System.Data.Entity;
+namespace UserDataDatabase.Models
+{
+    public class UserDataDatabaseContext : DbContext
+    {
+        public UserDataDatabaseContext() : base("UserDatabase") { }
+           
+        public DbSet<UserDataDetails> UserDataDatabases { get; set; }
+    }
+}
+
+____________________________________________________________
+8. Create a Form and apply any 4 HTML helpers. 
+
+view :index.cshtml
+
+@using (Html.BeginForm()) 
+{
+    <div>
+        @Html.Label("Username")
+        @Html.TextBox("Username")
+    </div>
+
+
+    <div>
+        @Html.Label("Password")
+        @Html.Password("Password")
+    </div>
+
+
+    <div>
+        @Html.Label("Gender")
+        @Html.DropDownList("Gender", new SelectList(new[]
+        {
+            "Male", "Female", "Other"
+        }), "Select Gender")
+    </div>
+
+
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+}
+
+____________________________________________________________
+
+9. Create a model that represents a student with properties like Id, Name, Email, DateOfBirth, 
+    Gender, and Course.Use HTML helpers such as @Html.TextBoxFor, @Html.LabelFor, @Html.DropDownListFor,
+    and @Html.ValidationMessageFor to render the form.
+    Display validation messages below each form field.
+    Use partial views to render the Gender and Course dropdowns.
+	
+
+model: StudentValidation.cs
+
+namespace Practical_ADMS_.Models
+{
+    public class StudentValidation
+{
+        public int Id { get; set; }
+
+        [Required(ErrorMessage = "Name is required")]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Date of Birth is required")]
+        [DataType(DataType.Date)]
+        public DateTime DateOfBirth { get; set; }
+
+        [Required(ErrorMessage = "Gender is required")]
+        public string Gender { get; set; }
+
+        [Required(ErrorMessage = "Course selection is required")]
+        public string Course { get; set; }
+    }
+}
+
+
+contrloller: StudentController.cs
+
+using Practical_ADMS_.Models;
+
+namespace YourNamespace.Controllers
+{
+    public class StudentController : Controller
+    {
+        public ActionResult Form()
+        {
+            return View(new StudentValidation());
+        }
+
+        [HttpPost]
+
+        public ActionResult Submit(StudentValidation model)
+        {
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Success");
+            }
+            return View("Form", model);
+        }
+
+        public ActionResult Success()
+        {
+            return View();
+        }
+    }
+}
+
+
+view: Form.cshtml  (Main view file-1)
+
+
+@model Practical_ADMS_.Models.StudentValidation
+
+@{
+    ViewBag.Title = "Student Registration Form";
+}
+
+<h2>Student Registration</h2>
+
+@using (Html.BeginForm("Submit", "Student", FormMethod.Post))
+{
+    <div>
+        @Html.LabelFor(m => m.Name)
+        @Html.TextAreaFor(m => m.Name)
+        @Html.ValidationMessageFor(m => m.Name)
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.Email)
+        @Html.TextBoxFor(m => m.Email)
+        @Html.ValidationMessageFor(m => m.Email)
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.DateOfBirth)
+        @Html.TextBoxFor(m => m.DateOfBirth)
+        @Html.ValidationMessageFor(m => m.DateOfBirth)
+    </div>
+
+    <!-- Include Partial Views for Gender and Course -->
+    @Html.Partial("_GenderDropdown")
+    @Html.Partial("_CourseDropdown")
+
+    <div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+}
+
+
+
+view: GenderDropDown.cshtml       (2)
+
+@model Practical_ADMS_.Models.StudentValidation
+
+<div>
+    @Html.LabelFor(m => m.Gender)
+    @Html.DropDownListFor(m => m.Gender, new SelectList(new[]
+    {
+        new { Value = "Male", Text = "Male" },
+        new { Value = "Female", Text = "Female" },
+        new { Value = "Other", Text = "Other" }
+    }, "Value", "Text"), "Select Gender")
+
+    @Html.ValidationMessageFor(m => m.Gender)
+</div>
+
+
+
+view: CourseDropDown.cshtml    (3)
+
+@model Practical_ADMS_.Models.StudentValidation
+
+<div>
+    @Html.LabelFor(m => m.Course)
+    @Html.DropDownListFor(m => m.Course, new SelectList(new[]
+    {
+        "Computer Science",
+        "Business Administration",
+        "Electrical Engineering",
+        "Mechanical Engineering",
+        "Biotechnology"
+    }), "Select Course")
+@Html.ValidationMessageFor(m => m.Course)  </div>
+
+____________________________________________________________

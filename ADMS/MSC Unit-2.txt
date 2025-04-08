@@ -1,0 +1,513 @@
+1. Annotation & Rouing 
+
+->model:Student_struct
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+
+namespace WebApplication2.Models
+{
+    public class Student_struct
+    {
+        [Required(ErrorMessage ="Enter a valid Name")]
+        [StringLength(7,ErrorMessage ="Enter 7 cheracter in name ")]
+        public string Name { get; set; }
+
+        [Required]
+        [Range(1,99,ErrorMessage ="Enter a Valide Age")]
+        public int Age { get; set; }
+
+        [Required]
+        [EmailAddress(ErrorMessage ="Enter a valid Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Compare("Password")]
+        public string ConformPassword { get; set; }
+
+        [Required]
+        [RegularExpression(@"^[6-9]{1}[0-9]{9}$",ErrorMessage ="Enter Phone number")]
+        public string Phone { get; set; }
+
+    }
+}
+
+->controller:StudentController
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using WebApplication2.Models;
+
+namespace WebApplication2.Controllers
+{
+    public class StudentController : Controller
+    {
+        // GET: Student
+        public ActionResult Index()
+        {
+            return View(new Student_struct());
+        }
+
+        [HttpPost]
+        public ActionResult Submit(Student_struct data)
+        {
+
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Success" ,new { Name = data.Name});
+            }
+            return View("Index", data);
+        }
+
+        [Route ("RRR/{name}")]
+        public ActionResult Success(string name)
+        {
+            var list = new Student_struct
+            {
+                Name = name,
+               
+            };
+            return View(list);
+        }
+    }
+}
+
+->view:Index
+
+@model WebApplication2.Models.Student_struct
+
+
+@using (Html.BeginForm("Submit", "Student", FormMethod.Post))
+{
+
+    @Html.LabelFor(m => m.Name)
+    @Html.TextBoxFor(m => m.Name)
+    @Html.ValidationMessageFor(m => m.Name)
+    <br />
+
+    @Html.LabelFor(m => m.Age)
+    @Html.TextBoxFor(m => m.Age)
+    @Html.ValidationMessageFor(m => m.Age)
+    <br />
+
+    @Html.LabelFor(m => m.Email)
+    @Html.TextBoxFor(m => m.Email)
+    @Html.ValidationMessageFor(m => m.Email)
+    <br />
+
+    @Html.LabelFor(m => m.Password)
+    @Html.PasswordFor(m => m.Password)
+    @Html.ValidationMessageFor(m => m.Password)
+    <br />
+
+    @Html.LabelFor(m => m.ConformPassword)
+    @Html.PasswordFor(m => m.ConformPassword)
+    @Html.ValidationMessageFor(m => m.ConformPassword)
+    <br />
+
+    @Html.LabelFor(m => m.Phone)
+    @Html.TextBoxFor(m => m.Phone)
+    @Html.ValidationMessageFor(m => m.Phone)
+    <br />
+
+    <button type="submit"> Submit </button>
+
+    <a href="/rrr/Parth-Rajput">Link Atribute</a>
+    <a href="/any5">Link Conventional</a>
+}
+
+->view:Success
+
+@model WebApplication2.Models.Student_struct
+
+<h2>Success @Model.Name </h2 >
+
+
+-> RouteConfig
+
+            routes.MapRoute(
+
+                name: "Demo",
+                url: "any5",
+                defaults: new { controller = "Student", action = "Submit", id = UrlParameter.Optional }
+                );
+
+____________________________________________________________
+
+2. Ajax
+
+->model:QuestionTwoData	
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace ExamQuestion.Models
+{
+    public class QuestionTwoData
+    {
+        public string Name { get; set; }
+        public int Price { get; set; }
+    }
+}
+
+->controller:QuestionTwoController
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using ExamQuestion.Models;
+
+namespace ExamQuestion.Controllers
+{
+    public class QuestionTwoController : Controller
+    {
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public JsonResult GetProduct()
+        {
+            var product = new List<QuestionTwoData>
+            {
+                new QuestionTwoData {Name ="Laptop" , Price=3600},
+                new QuestionTwoData {Name ="Laptop" , Price=3600},
+                new QuestionTwoData {Name ="Laptop" , Price=3600}
+            };
+
+            return Json(product);
+        }
+    }
+}
+
+->view:Index
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Get Product</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <button id="loadData">Get Product</button>
+
+    <script>
+        $(document).ready(function () {
+            $("#loadData").click(function () {
+                $.getJSON("/QuestionTwo/GetProduct", function (data) {
+                    $.each(data, function (i, product) {
+                        $("body").append(`<p>${product.name} - $${product.price}</p>`);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+____________________________________________________________
+
+3.MVC
+
+Step:
+
+-> Add-Migration Initial.
+-> Update-Database
+
+->model:UserData
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Scaffloding.Models
+{
+    public class UserData
+    {
+        public int ID { get; set; }
+
+        public string Name { get; set; }
+    }
+}
+
+____________________________________________________________
+
+4. Email
+
+->model:QuestionFourData
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+
+namespace ExamQuestion.Models
+{
+    public class QuestionFourData
+    {
+        [Required]
+        [EmailAddress(ErrorMessage ="enter emaill")]
+        public string Email { get; set; }
+    }
+}f
+
+->controller:QuestionFourController
+
+using Microsoft.AspNetCore.Mvc;
+using ExamQuestion.Models;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace ExamQuestion.Controllers
+{
+    public class QuestionFourController : Controller
+    {
+        private static List<QuestionFourData> emails = new List<QuestionFourData>
+        {
+            new QuestionFourData { Email = "test@example.com" }
+        };
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Index(QuestionFourData model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (emails.Any(e => e.Email == model.Email))
+                    ViewBag.message = "Email is registered";
+                else
+                    ViewBag.message = "Email is not registered";
+            }
+
+            return View();
+        }
+    }
+}
+
+
+->view:Index
+
+@model ExamQuestion.Models.QuestionFourData
+
+<h2>Check Email</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(m => m.Email)
+    @Html.TextBoxFor(m => m.Email)
+    @Html.ValidationMessageFor(m => m.Email)
+
+    <br /><br />
+    <input type="submit" value="Check" />
+}
+
+@if (ViewBag.message != null)
+{
+    <p>@ViewBag.message</p>
+}
+____________________________________________________________
+
+5. Register
+
+->model:QuestionOneData
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace ExamQuestion.Models
+{
+    public class QuestionOneData
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
+}
+
+
+->controller:QuestionOneController
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using ExamQuestion.Models;
+
+namespace ExamQuestion.Controllers
+{
+    public class QuestionOneController : Controller
+    {
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Index(QuestionOneData questionOneData)
+        {
+            if (ModelState.IsValid)
+            {
+                ViewBag.message = "User Data Register Successfully";
+            };
+            return View(questionOneData);
+        }
+    }
+}
+
+->view:Index
+
+@model ExamQuestion.Models.QuestionOneData
+
+@if (ViewBag.message != null)
+{
+    <p>@ViewBag.message</p>
+}
+
+
+@using (Html.BeginForm("Index", "QuestionOne", FormMethod.Post))
+{
+
+    @Html.Label("FirstName")
+    @Html.TextArea("FirstName")
+
+    @Html.Label("LastName")
+    @Html.TextArea("LastName")
+
+    @Html.Label("Email")
+    @Html.TextArea("Email")
+
+    @Html.Label("Password")
+    @Html.TextArea("Password")
+
+    <button>Submit</button>
+
+}
+____________________________________________________________
+
+6. Annotations
+
+->model:QuestionThreeData
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+
+namespace ExamQuestion.Models
+{
+    public class QuestionThreeData
+    {
+       [Required]
+       [StringLength(50, MinimumLength =3 , ErrorMessage ="Name Should Have Min 3 Character!!")]
+       public string Name { get; set; }
+
+        [Required]
+        [Range(18,100, ErrorMessage ="Age Should Be Between 18 and 100")]
+       public int Age { get; set; }
+
+        [Required]
+        [EmailAddress(ErrorMessage = "Invalid Email Address.")]
+        public string Email { get; set; }
+
+        [Required]
+        [Phone(ErrorMessage = "Invalid Phone Number.")]
+        public string Phone { get; set; }
+    }
+}
+
+
+->controller:QuestionThreeController
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using ExamQuestion.Models;
+
+namespace ExamQuestion.Controllers
+{
+    public class QuestionThreeController : Controller
+    {
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Index(QuestionThreeData questionThreeData)
+        {
+            if (ModelState.IsValid)
+            {
+                ViewBag.message = "User SuccessFully Register";
+            };
+            return View(questionThreeData);
+        }
+    }
+}
+
+->view:Index
+
+@model ExamQuestion.Models.QuestionThreeData
+
+@if (ViewBag.message != null)
+{
+    <p>@ViewBag.message</p>
+}
+
+@using (Html.BeginForm("Index", "QuestionThree", FormMethod.Post))
+{
+    <div>
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name)
+        @Html.ValidationMessageFor(m => m.Name)
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.Age)
+        @Html.TextBoxFor(m => m.Age)
+        @Html.ValidationMessageFor(m => m.Age)
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.Email)
+        @Html.TextBoxFor(m => m.Email)
+        @Html.ValidationMessageFor(m => m.Email)
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.Phone)
+        @Html.TextBoxFor(m => m.Phone)
+        @Html.ValidationMessageFor(m => m.Phone)
+    </div>
+
+    <button type="submit">Submit</button>
+}
+____________________________________________________________

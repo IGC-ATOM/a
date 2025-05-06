@@ -267,7 +267,7 @@ namespace ExamQuestion.Models
         [EmailAddress(ErrorMessage ="enter emaill")]
         public string Email { get; set; }
     }
-}f
+}
 
 ->controller:QuestionFourController
 

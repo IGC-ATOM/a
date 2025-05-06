@@ -1,0 +1,425 @@
+1) Spa (Normal MVC)
+
+ProjectName: AngularSpaRouting
+
+->Controllers: StudentController
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace AngularSpaRouting.Controllers
+{
+    public class StudentController : Controller
+    {
+        // GET: Student
+        public ActionResult Index()
+        {
+            return View();
+        }
+    }
+}
+
+____________________________________________________________
+
+->View: Index 
+
+<html ng-app="Main">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+
+</head>
+<body>
+    <h1>My Angular Spa</h1>
+
+    <a href="#!/home">Home</a>
+    <a href="#!/about">About</a>
+
+    <div ng-view></div>
+</body>
+
+
+</html>
+
+<script>
+    var app = angular.module("Main", ["ngRoute"])
+
+    app.config(function ($routeProvider) {
+        $routeProvider
+            .when("/home", {
+                template: "This Is Home Page"
+            })
+            .when("/about", {
+                template: "This Is about Page"
+            })
+            .otherwise({ redirectTo: "/" });
+
+    });
+
+</script>
+
+_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_
+
+
+2) POSTMAN WEBAPI 			 (Project WebAPI )
+
+ProjectName: Postman
+
+->Model: Product
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace Postman.Models
+{
+    public class Product
+    {
+        public int ID { get; set; }
+
+        public string Name { get; set; }
+
+    }
+}
+
+____________________________________________________________
+
+->Controller: ProductController 		(WebAPI Controller)
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using Postman.Models;
+
+namespace Postman.Controllers
+{
+    public class ProductController : ApiController
+    {
+        static List<Product> products = new List<Product>
+        {
+            new Product{ID=1,Name="Laptop"},
+            new Product{ID=2,Name="Mobile"},
+            new Product{ID=3,Name="Tablet"},
+            new Product{ID=3,Name="SmartWatch"},
+        };
+
+        public IEnumerable<Product> Get()
+        {
+            return products;
+        }
+
+        public IHttpActionResult Post(Product p) {
+            products.Add(p);
+            return Ok(p);
+        }
+    }
+}
+____________________________________________________________
+
+
+Go to Postman Application (Body -> raw)
+
+_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_
+
+
+3) AngularJS POSTMAN 			(Project Webapi)
+
+ProjectName: AngularWebAPI
+
+->Model: Product
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace AngularWebAPI.Models
+{
+    public class Product
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+
+    }
+}
+
+____________________________________________________________
+
+->Controllers: ProductController		 (WebAPI Controller)
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using AngularWebAPI.Models;
+
+namespace AngularWebAPI.Controllers
+{
+    public class ProductController : ApiController
+    {
+        static List<Product> products = new List<Product>
+        {
+            new Product{ ID = 1, Name = "Mobile"},
+            new Product{ ID = 2, Name = "Laptop"},
+            new Product{ ID = 3, Name = "Tablet"},
+            new Product{ ID = 4, Name = "SmartWatch"}
+        };
+
+        public IEnumerable<Product> Get(){
+            return products;
+        }
+
+    }
+}
+
+____________________________________________________________
+
+->View: Api			 (Right click on Project -> add -> Htmlpage )
+
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-app="Main" ng-controller="Maincontroller">
+
+    <h2>Product List</h2>
+
+    <ul>
+        <li ng-repeat="p in products"> {{p.ID}} - {{p.Name}}</li>
+    </ul>
+
+    <script>
+
+        var app = angular.module("Main", []);
+
+        app.controller("Maincontroller", function ($scope, $http) {
+            $http.get("http://localhost:63840/Api/product")
+                .then(function (response) {
+                    $scope.products = response.data;
+                })
+
+        })
+
+    </script>
+
+</body>
+</html>
+
+_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_
+
+4) University Service
+
+ProjectName: UnversityApi
+
+->Model: University
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace UnversityApi.Models
+{
+    public class University
+    {
+        public int UniversityID { get; set; }
+        public string UniversiyName { get; set; }
+        public List<string> Faculties { get; set; }
+        public List<string> Departments { get; set; }
+        public string Address { get; set; }
+        public string Pincode { get; set; }
+
+    }
+}
+
+____________________________________________________________
+
+->Controller: UniversityController
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using UnversityApi.Models;
+
+
+
+namespace UnversityApi.Controllers
+{
+    public class UniversityController : ApiController
+    {
+        [HttpGet]
+        public University GetUniversity() {
+            return new University
+            {
+                UniversityID = 101,
+                UniversiyName ="Parul University",
+                Faculties = new List<string> {"Engeniaring","Science","Arts"},
+                Departments = new List<string> {"Computer Science", "Physics","History"},
+                Address = "Vadodra",
+                Pincode = "396001"
+
+            };
+        }
+    }
+}
+____________________________________________________________
+
+To Run: /api/controllerName
+
+_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_
+
+5) Extend the Controller in MVC
+
+ProjectName: ControllerExtend
+
+->1) Controller: BaseController
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace ControllerExtend.Controllers
+{
+    public class BaseController : Controller
+    {
+        protected string msg = "Helllo i an BaseControler";
+    }
+}
+
+____________________________________________________________
+
+->2) Controller: ExtendedController
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace ControllerExtend.Controllers
+{
+    public class ExtendedController : BaseController
+    {
+        [HttpGet]
+
+        public ActionResult Index()
+        {
+            ViewBag.msg = msg;
+
+            return View();
+        }
+    }
+}
+
+____________________________________________________________
+
+->View: Index
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+@ViewBag.msg
+
+_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_
+
+6) WebForm Application to Take Input  (Chose WebForm)
+
+ProjectName: WebForm
+
+
+-> Default.aspx.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace WebForm
+{
+    public partial class _Default : Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+        protected void btnSubmit_Click(object sender, EventArgs e)
+        {
+            OutUniversity.Text = inputname.Text;
+            OutEmail.Text = email.Text;
+            OutName.Text = name.Text;
+            pnlOutput.Visible = true;
+        }
+    }
+}
+
+____________________________________________________________
+
+-> Default.aspx
+
+<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="WebForm._Default" %>
+
+<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+
+    <h2>University Registration</h2>
+
+    <table>
+        <tr>
+            <td><asp:Label runat="server" Text="University Name:" /></td>
+            <td><asp:TextBox ID="inputname" runat="server" /></td>
+        </tr>
+        <tr>
+            <td><asp:Label runat="server" Text="Email:" /></td>
+            <td><asp:TextBox ID="email" runat="server" /></td>
+        </tr>
+        <tr>
+            <td><asp:Label runat="server" Text="Name:" /></td>
+            <td><asp:TextBox ID="name" runat="server" /></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center;">
+                <asp:Button ID="btn" runat="server" Text="Submit" OnClick="btnSubmit_Click" />
+            </td>
+        </tr>
+    </table>
+
+    <asp:Panel ID="pnlOutput" runat="server" Visible="False" style="margin-top:20px;">
+        <h3>Submitted Details:</h3>
+        <table>
+            <tr>
+                <td><strong>University Name:</strong></td>
+                <td><asp:Label ID="OutUniversity" runat="server" /></td>
+            </tr>
+            <tr>
+                <td><strong>Email:</strong></td>
+                <td><asp:Label ID="OutEmail" runat="server" /></td>
+            </tr>
+            <tr>
+                <td><strong>Name:</strong></td>
+                <td><asp:Label ID="OutName" runat="server" /></td>
+            </tr>
+        </table>
+    </asp:Panel>
+
+</asp:Content>
+
+_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_

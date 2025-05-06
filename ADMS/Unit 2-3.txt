@@ -1,0 +1,691 @@
+unit -2 
+
+2-3-4-15: 
+
+annotations & validations, appropriate messages after registering the user
+
+Mode: Usredata.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.ComponentModel.DataAnnotations;
+
+namespace Basic_Practice.Models
+{
+    public class Userdata
+    {   
+        [Required]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Input a valid String...")]
+        public string Name { get; set; }
+
+        [Required]
+        [EmailAddress(ErrorMessage ="Input a valide Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [Range(18,100, ErrorMessage ="Inpot a valide age ")]
+        public int Age { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        public String Password { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Compare("Password",ErrorMessage ="Enter a corect Password")]
+        public String Confirmedpassword { get; set; }
+
+	 [Required] 
+	 [DataType(DataType.Date)] 
+	 public DateTime DateOfJoining { get; set; } 
+
+    }
+}
+
+____________________________________________________________
+
+Controller: UserTestController.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using Basic_Practice.Models;
+
+namespace Basic_Practice.Controllers
+{
+    public class UserTestController : Controller
+    {
+
+       
+        public ActionResult Index(Userdata user)
+        {
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Success");
+            }
+            return View(user);
+        }
+        
+       
+        public ActionResult Success()
+        {
+            return View();
+        }
+    }
+}
+
+____________________________________________________________
+
+View: Index.cshtml
+
+@model Basic_Practice.Models.Userdata
+
+<h2>User rugistration form </h2>
+
+@using (Html.BeginForm("Index", "UserTest", FormMethod.Post))
+{
+    <div>
+        @Html.LabelFor(m=>m.Name)
+        @Html.TextBoxFor(m=>m.Name)
+        @Html.ValidationMessageFor(m=>m.Name)
+    </div>
+    
+    <div>
+        @Html.LabelFor(m => m.Email)
+        @Html.TextBoxFor(m => m.Email)
+        @Html.ValidationMessageFor(m => m.Email)
+    </div>
+    
+    <div>
+        @Html.LabelFor(m => m.Age)
+        @Html.TextBoxFor(m => m.Age)
+        @Html.ValidationMessageFor(m => m.Age)
+    </div>
+    
+    <div>
+        @Html.LabelFor(m => m.Password)
+        @Html.PasswordFor(m => m.Password)
+        @Html.ValidationMessageFor(m => m.Password)
+    </div>
+    
+    <div>
+        @Html.LabelFor(m => m.Confirmedpassword)
+        @Html.PasswordFor(m => m.Confirmedpassword)
+        @Html.ValidationMessageFor(m => m.Confirmedpassword)
+    </div>
+
+    <div> 
+	 @Html.LabelFor(m => m.DateOfJoining, "Date of Joining")
+	 @Html.TextBoxFor(m => m.DateOfJoining, "{0:yyyy-MM-dd}", new { @type = "date" }) 
+	 @Html.ValidationMessageFor(m => m.DateOfJoining) 
+ </div> 
+
+
+    <button type="submit">submit</button>
+}
+
+____________________________________________________________
+____________________________________________________________
+
+5-7 registered email is valid or not, Authorization.
+
+model:  UserLogin
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.ComponentModel.DataAnnotations;
+
+namespace Basic_Practice.Models
+{
+    public class UserLogin
+    {
+        [Required]
+        [EmailAddress (ErrorMessage ="Entera a correct Email")]
+        public String Email { get; set; }
+
+        [Required(ErrorMessage ="Enter avalid password")]
+        [DataType(DataType.Password)]
+        public String Password { get; set; }
+    }
+}
+____________________________________________________________
+
+controller:  Accounte
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using Basic_Practice.Models;
+namespace Basic_Practice.Controllers
+{
+    public class AccounteController : Controller
+    {
+        // GET: Accounte
+        public ActionResult Login(UserLogin user)
+        {
+            if(ModelState.IsValid) {
+
+                if (user.Email == "Admin@gmail.com" && user.Password == "123") {
+
+                    return RedirectToAction("SecurePade");
+
+                }
+            };
+            return View(user);
+
+        }
+
+        public ActionResult SecurePade()
+        {
+            return View();
+        }
+    }
+}
+
+____________________________________________________________
+
+view: Login
+
+@model Basic_Practice.Models.UserLogin
+
+@using (Html.BeginForm("Login", "Accounte", FormMethod.Post))
+{
+<div>
+    @Html.LabelFor(m => m.Email)
+    @Html.TextBoxFor(m => m.Email)
+    @Html.ValidationMessageFor(m => m.Email)
+</div>
+
+<div>
+    @Html.LabelFor(m => m.Password)
+    @Html.PasswordFor(m => m.Password)
+    @Html.ValidationMessageFor(m => m.Password)
+</div>
+
+    <button type="submit">submit</button>
+}
+
+____________________________________________________________
+____________________________________________________________
+
+9 Ajax application to show some product lists
+
+Model: Product
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace Basic_Practice.Models
+{
+    public class Product
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+
+    }
+}
+
+____________________________________________________________
+____________________________________________________________
+
+Controller: ProductController
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using Basic_Practice.Models;
+
+namespace Basic_Practice.Controllers
+{
+    public class ProductController : Controller
+    {
+        
+        public ActionResult Product()
+        {
+            return View();
+        }
+
+        public JsonResult GetProduct()
+        {
+            var product = new List<Product>
+            {
+                new Product{Id = 1, Name = "Phone" },
+                new Product{Id = 2, Name = "Laptop" },
+                new Product{Id = 3, Name = "Tablet" }
+            };
+            return Json(product , JsonRequestBehavior.AllowGet);
+        }
+    }
+}
+____________________________________________________________
+
+View: Product
+
+<h2> Product list: </h2>
+<button id="getData">Click To View</button>
+
+<ul id="displaydata"> </ul>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"> </script>
+
+<script>
+    $('#getData').click(function () {
+        $.getJSON('/Product/GetProduct', function (data) {
+            $('#displaydata').empty();
+            $.each(data, function (i, item) {
+                $('#displaydata').append('<li>' + item.Name + '</li>');
+            });
+        });
+    });
+
+</script>
+____________________________________________________________
+____________________________________________________________
+
+12 MVC application to show the Routing
+
+Controlle: WebRouting
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace Basic_Practice.Controllers
+{
+    public class WebRoutingController : Controller
+    {
+   
+        public ActionResult Detail(int ID)
+        {
+            ViewBag.ProductID = ID;
+
+            return View();
+        }
+
+        public ActionResult Category(string Name)
+        {
+
+            ViewBag.CategoryName = Name;
+
+            return View();
+        }
+    }
+}
+
+____________________________________________________________
+
+View: Detail
+
+<h2>Product detail</h2>
+<p> Product Name:@ViewBag.ProductID</p>
+
+View: Category
+
+<h1>Category</h1>
+<p>Category Name:@ViewBag.CategoryName</p>
+
+RouteConfig.cs
+
+        public static void RegisterRoutes(RouteCollection routes)
+        {
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            routes.MapRoute(
+                name: "ProductDetail",
+                url: "Detail/{ID}",
+                defaults: new { controller = "WebRouting", action = "Detail"}
+            );
+
+            routes.MapRoute(
+                name: "ProductCategory",
+                url: "Category/{Name}",
+                defaults: new { controller = "WebRouting", action = "Category" }
+            );
+
+            routes.MapRoute(
+                name: "Default",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            );
+
+____________________________________________________________
+____________________________________________________________
+
+_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_
+
+
+Model Annotation
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.ComponentModel.DataAnnotations;
+
+namespace WebApplication3.Models
+{
+    public class Annotation
+    {
+        [Required(ErrorMessage = "Enter ID")]
+        public int Id { get; set; }
+
+        [Required]
+        [StringLength(20, MinimumLength = 4, ErrorMessage = "Enter valid String")]
+        public string Name { get; set; }
+
+        [Required]
+        [Range(18, 99, ErrorMessage = "Enter Valid age ")]
+        public int Age { get; set; }
+
+        [Required(ErrorMessage = "Enter Email")]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Enter Password")]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
+        [Required(ErrorMessage = "Enter ConformPassword")]
+        [DataType(DataType.Password)]
+        [Compare("Password")]
+        public string ConformPassword { get; set; }
+
+        [Required]
+        [Phone(ErrorMessage = "Enter a valid phone number")]
+        public string Phone { get; set; }
+
+
+    }
+}
+
+____________________________________________________________
+
+Controller AnnotationController
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using WebApplication3.Models;
+
+namespace WebApplication3.Controllers
+{
+    public class AnnotationController : Controller
+    {
+        // GET: Annotation
+        public ActionResult Index(Annotation user)
+        {
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Success", user);
+            };
+
+            return View(user);
+        }
+
+
+        public ActionResult Success(Annotation user)
+        {
+            return View(user);
+        }
+    }
+}
+
+____________________________________________________________
+
+View Index
+
+@model WebApplication3.Models.Annotation
+
+
+@using (Html.BeginForm("Index", "Annotation", FormMethod.Post))
+{ 
+        <div>
+           @Html.LabelFor(m => m.Id)
+           @Html.TextBoxFor(m => m.Id)
+           @Html.ValidationMessageFor(m => m.Id)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name)
+            @Html.ValidationMessageFor(m => m.Name)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Age)
+            @Html.TextBoxFor(m => m.Age)
+            @Html.ValidationMessageFor(m => m.Age)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Email)
+            @Html.TextBoxFor(m => m.Email)
+            @Html.ValidationMessageFor(m => m.Email)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Password)
+            @Html.PasswordFor(m => m.Password)
+            @Html.ValidationMessageFor(m => m.Password)
+        </div>
+         <div>
+            @Html.LabelFor(m => m.ConformPassword)
+            @Html.PasswordFor(m => m.ConformPassword)
+            @Html.ValidationMessageFor(m => m.ConformPassword)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Phone)
+            @Html.TextBoxFor(m => m.Phone)
+            @Html.ValidationMessageFor(m => m.Phone)
+        </div>
+
+        <button type="Submit">Submit</button>
+}
+
+____________________________________________________________
+
+View Success
+
+@model WebApplication3.Models.Annotation
+
+<h2>Success</h2>
+
+<div>@Model.Name</div>
+
+
+_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_
+
+_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_
+
+Unit 3 
+
+
+4: SPA application	
+
+view:
+
+<html ng-app="Main">
+
+<head>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+</head>
+
+<body>
+    <h1>My Angular SPA</h1>
+
+    <a href="#!/home">Home</a>
+    <a href="#!/about">About</a>
+
+    <div ng-view></div>
+</body>
+
+
+</html>
+<script>
+    var app = angular.module("Main", ["ngRoute"])
+    app.config(function ($routeProvider) {
+        $routeProvider
+            .when("/home", {
+                template: "This is Home Page "
+            })
+
+            .when("/about", {
+                template: "This is About Page "
+            })
+    });
+
+</script>
+
+____________________________________________________________
+
+controller
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace Bassic_Angular_WEBAPI.Controllers
+{
+    public class AngularController : Controller
+    {
+        // GET: Angular
+        public ActionResult Index()
+        {
+            return View();
+        }
+    }
+}
+
+
+
+7 Create a Web API and Test the controller using POSTMAN platform.
+
+
+
+8 Create a WEB API using angularJS.
+
+
+using Basic_WEBAPI.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+
+
+namespace Basic_WEBAPI.Controllers
+{
+    public class AngulerWEBAPIController : ApiController
+    {
+
+        static List<Product> products = new List<Product>
+        {
+            new Product  {ID=1, Name= "Parth"},
+            new Product  {ID=2, Name= "Mahipal"}
+        };
+
+        public IEnumerable<Product> Get()
+        {
+            return products;
+        }
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+</head>
+
+<body ng-app="main" ng-controller="mainController">
+
+    <ul>
+        <li ng-repeat="p in products">{{p.ID}}- {{p.Name}}</li>
+    </ul>
+
+    <script>
+        var app = angular.module("main", []);
+
+        app.controller("mainController", function ($scope, $http) {
+            $http.get("http://localhost:59714/api/AngulerWEBAPI/")
+                .then(function (response) {
+                    $scope.products = response.data;
+                });
+        });
+
+    </script>
+</body>
+</html>
+
+9 Create a University Service and show the university details like: University ID, University Name, Faculties names, Departments Name, Address, Pin code.
+
+14 Demonstrate how you can extend the Controller in  mvc application.
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace Basic_WEBAPI.Controllers
+{
+    public class BaseController : Controller
+    {
+        protected string msg = "Hello pro Player";
+    }
+}
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace Basic_WEBAPI.Controllers
+{
+    public class ExtendController : BaseController
+    {
+        // GET: Extend
+        public ActionResult Index()
+        {
+            ViewBag.msg = msg;
+            return View();
+        }
+    }
+}
+
+
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>@ViewBag.msg</h2>
+
+
+19 Create a product service which can hold details of products and display the appropriate details about products.
+
+20 Create a web form application to take input as University Name, Email, Name with a submit button and show the details on browser.
+
+
+
+
